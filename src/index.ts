@@ -1,4 +1,5 @@
 import express from 'express';
+import basicAuthMiddleware from './middlewares/basic-auth-middleware';
 import errorHandler from './middlewares/error-handler-middleware';
 import authRoute from './routes/auth-route';
 import statusRoute from './routes/status-route';
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Routes config
+
 app.use(statusRoute);
 app.use(usersRoute);
 app.use(authRoute);
