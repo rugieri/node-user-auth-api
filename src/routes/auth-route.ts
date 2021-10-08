@@ -3,8 +3,17 @@ import JWT from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
 import basicAuthMiddleware from '../middlewares/basic-auth-middleware';
 import ForbiddenError from '../models/errors/forbidden-error-model';
+import jwtAuthMiddleware from '../middlewares/jwt-auth-middleware';
 
 const authRoute = Router();
+
+authRoute.post(
+  '/token/validate',
+  jwtAuthMiddleware,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.sendStatus(StatusCodes.OK);
+  }
+);
 
 authRoute.post(
   '/token',

@@ -1,10 +1,9 @@
 import express from 'express';
-import basicAuthMiddleware from './middlewares/basic-auth-middleware';
-import bearerAuthMiddleware from './middlewares/bearer-auth-middleware';
 import errorHandler from './middlewares/error-handler-middleware';
 import authRoute from './routes/auth-route';
 import statusRoute from './routes/status-route';
 import usersRoute from './routes/users-route';
+import jwtAuthMiddleware from './middlewares/jwt-auth-middleware';
 const app = express();
 
 //App config
@@ -14,8 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 //Routes config
 
 app.use(statusRoute);
-app.use(bearerAuthMiddleware, usersRoute);
 app.use(authRoute);
+app.use(jwtAuthMiddleware);
+app.use(usersRoute);
 
 // Handle errors config
 app.use(errorHandler);
