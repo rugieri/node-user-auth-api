@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import JWT from 'jsonwebtoken';
+import JWT, { SignOptions } from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
 import basicAuthMiddleware from '../middlewares/basic-auth-middleware';
 import ForbiddenError from '../models/errors/forbidden-error-model';
@@ -26,7 +26,7 @@ authRoute.post(
         throw new ForbiddenError('User not entered!');
       }
       const jwtPayload = { username: user.username };
-      const jwtOptions = { subject: user?.uuid };
+      const jwtOptions: SignOptions = { subject: user?.uuid, expiresIn: '20m' };
       const secretKey = 'my_secret_key';
 
       const jwt = JWT.sign(jwtPayload, secretKey, jwtOptions);
